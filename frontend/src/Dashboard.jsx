@@ -1,5 +1,7 @@
 import React from 'react'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { Link, Outlet } from 'react-router-dom'
+
 function Dashboard() {
   return (
     <div className="container-fluid">
@@ -11,22 +13,22 @@ function Dashboard() {
                 </a>
                 <ul className="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                     <li className="nav-item">
-                        <a href="#" className="nav-link align-middle px-0">
+                        <Link to="/" className="nav-link align-middle px-0">
                             <i className="fs-4 bi-house"></i> <span className="ms-1 d-none d-sm-inline">Dashbaord</span>
-                        </a>
+                        </Link>
                     </li>
                     <li>
-                        <a href="#submenu1" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
-                            <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Manage Employees</span> </a>
+                        <Link to="/employee" data-bs-toggle="collapse" className="nav-link px-0 align-middle">
+                            <i className="fs-4 bi-speedometer2"></i> <span className="ms-1 d-none d-sm-inline">Manage Employees</span> </Link>
                     </li>
                     <li>
-                        <a href="#" className="nav-link px-0 align-middle">
-                            <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline">Profile</span></a>
+                        <Link to="/profile" className="nav-link px-0 align-middle">
+                            <i className="fs-4 bi-table"></i> <span className="ms-1 d-none d-sm-inline">Profile</span></Link>
                     </li>
 
                     <li>
-                        <a href="#" className="nav-link px-0 align-middle">
-                            <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Logout</span> </a>
+                        <Link to="/login" className="nav-link px-0 align-middle">
+                            <i className="fs-4 bi-people"></i> <span className="ms-1 d-none d-sm-inline">Logout</span> </Link>
                     </li>
                 </ul>
              
@@ -36,6 +38,7 @@ function Dashboard() {
             <div className='p-2 d-flex justify-content-center border shadow'>
               <h4>Employee Management System</h4>
             </div>
+            <Outlet/>
         </div>
     </div>
 </div>
