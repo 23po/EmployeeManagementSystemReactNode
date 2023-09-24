@@ -4,7 +4,8 @@ import cors from 'cors'
 import coookieParser from 'cookie-parser'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-
+import multer from 'multer'
+import path from 'path'
 
 const app = express();
 app.use(cors());
@@ -17,6 +18,19 @@ const con = mysql2.createConnection({
     user: "newuser",
     password: "newpassword",
     database: "ems",
+})
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
+    }
+})
+
+const upload = multer({
+    storage: storage
 })
 
 con.connect(function(err) {
@@ -39,6 +53,31 @@ app.post("/login", (req, res) => {
         return res.json({Status: "Error", Error: "Wrong Email or Password"});
     }
    });
+})
+
+app.post("/create", upload.single('image'), (req, res) => {
+    //console.log(req.file);
+
+    const sql = "INSERT INTO employee (`name`, `email`, `password`, `image`, `salary`, `address`) VALUES (?)";
+
+    bcrypt.hash(req.body.password.toString(), 10, (err, hash) => {
+        if(err) return res.json({Error: "error in hashing password"});
+       
+        const values = [
+            req.body.name,
+            req.body.email,
+            hash,
+            req.body.salary,
+            req.body.address,
+            req.file.filename
+        ]
+
+        con.query(sql, [values], (err, result) =>  {
+            if(err) return res.json({Error: "error inside signup query"});
+            return res.json({Status: "Success"});
+        } )
+    })
+
 })
 
 app.listen(8081, () => {
