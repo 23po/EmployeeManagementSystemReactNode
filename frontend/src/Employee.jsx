@@ -1,13 +1,59 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 
 function Employee() {
+
+
+  const [data, setData] = useState([]);
+
+  useEffect(()=> {
+    axios.get('http://localhost:8081/getEmployees')
+    .then(res => {
+      if(res.data.Status === "Success") {
+        console.log(res.data.Result)
+        setData(res.data.Result)
+      }
+      else {
+        alert("Error")
+      }
+    })
+    .catch(err => console.log(err))
+  }, [])
+
   return (
     <div className='px-5 py-3'>
       <div className='d-flex justify-content-center'>
         <h3>Employee List</h3>
       </div>
       <Link to="/create" className='btn btn-success'>Add Employee</Link>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Image</th>
+          <th>Email</th>
+          <th>Salary</th>
+          <th>Address</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((employee, index)=> {
+         return  <tr key={index}>
+            <td>{employee.name}</td>
+            <td>{}</td>
+            <td>{employee.email}</td>
+            <td>{employee.salary}</td>
+            <td>{employee.address}</td>
+            <td>
+              <button>edit</button>
+              <button>delete</button>
+            </td>
+         </tr>
+        })}  
+      </tbody>
+    </table>
     </div>  
   )
 }
