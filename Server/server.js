@@ -105,6 +105,32 @@ app.get('/dashboard', verifyUser, (req, res) => {
     return res.json({Status: "Success"})
 })
 
+app.get('/adminCount', (req, res) => {
+    const sql = "Select count(id) as admin from users";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Error: "Error in running query"})
+        return res.json(result);
+    })
+})
+
+app.get('/employeeCount', (req, res) => {
+    const sql = "Select count(id) as employee from employee";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Error: "Error in running query"})
+        return res.json(result);
+    })
+})
+
+app.get('/salary', (req, res) => {
+    const sql = "Select sum(salary) as sumOfSalary from employee";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Error: "Error in running query"})
+        return res.json(result);
+    })
+})
+
+
+
 app.post("/login", (req, res) => {
    const sql = "SELECT * FROM users Where email = ? AND password = ?";
    con.query(sql, [req.body.email, req.body.password], (err, result) => {
