@@ -8,6 +8,9 @@ import Profile from './Profile'
 import Home from './Home'
 import AddEmployee from './AddEmployee'
 import EditEmployee from './EditEmployee'
+import Start from './Start'
+import EmployeeDetail from './EmployeeDetail'
+import EmployeeLogin from './EmployeeLogin'
 
 function App() {
   //const [count, setCount] = useState(0)
@@ -24,6 +27,10 @@ function App() {
         <Route path='/employeeEdit/:id' element={<EditEmployee/>}></Route>
       </Route>
       <Route path='/login' element={<Login/>}></Route>
+      <Route path='/start' element={<Start/>}></Route>
+      <Route path='/employeeDetail' element={<EmployeeDetail/>}></Route>
+      <Route path='/employeeLogin' element={<EmployeeLogin/>}></Route>
+       
        </Routes>
 
        </BrowserRouter> 
